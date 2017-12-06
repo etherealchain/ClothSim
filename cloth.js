@@ -39,6 +39,7 @@ function onMouseMove(event ){
     }
 }
 function touchMove(event){
+    event.preventDefault();
     if(getCloth){
         setGrabPoint(event.touches[0].pageX, event.touches[0].pageY);
     }
