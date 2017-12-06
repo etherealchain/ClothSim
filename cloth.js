@@ -9,12 +9,12 @@ var nearPlane = 1;
 var farPlane = 10000;
 var groundMesh;
 
-window.addEventListener('touchstart', touchStart, false);
-window.addEventListener('touchmove', touchMove, false);
-window.addEventListener('touchend', touchEnd, false);
-window.addEventListener("mousedown", onMouseDown, false);
-window.addEventListener("mousemove", onMouseMove, false);
-window.addEventListener("mouseup", onMouseUp, false);
+document.addEventListener('touchstart', touchStart, {passive: true, capture: false});
+document.addEventListener('touchmove', touchMove, {passive: true, capture: false});
+document.addEventListener('touchend', touchEnd, {passive: true, capture: false});
+document.addEventListener("mousedown", onMouseDown, {capture: false});
+document.addEventListener("mousemove", onMouseMove, {capture: false});
+document.addEventListener("mouseup", onMouseUp, {capture: false});
 
 init();
 animate();
