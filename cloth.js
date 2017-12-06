@@ -9,6 +9,9 @@ var nearPlane = 1;
 var farPlane = 10000;
 var groundMesh;
 
+window.addEventListener('touchstart', onMouseDown, false);
+window.addEventListener('touchmove', touchMove, false);
+window.addEventListener('touchend', onMouseUp, false);
 window.addEventListener("mousedown", onMouseDown, false);
 window.addEventListener("mousemove", onMouseMove, false);
 window.addEventListener("mouseup", onMouseUp, false);
@@ -17,16 +20,23 @@ init();
 animate();
 
 function onMouseDown(event ){
-
     getCloth = true;
+}
+function setGrabPoint(pointX, pointY){
+    let mousePoint = new THREE.Vector3((pointX / window.innerWidth ) * 2 - 1, -( pointY / window.innerHeight ) * 2 + 1, 0.5).unproject( camera );
+    let unitDirection = mousePoint.sub( camera.position ).normalize();
+    let targetZ = 0;
+    let ratio = (targetZ - camera.position.z )/ unitDirection.z;
+    grabClothPoint = camera.position.clone().add(unitDirection.multiplyScalar(ratio));
 }
 function onMouseMove(event ){
     if(getCloth){
-        let mousePoint = new THREE.Vector3((event.clientX / window.innerWidth ) * 2 - 1, -( event.clientY / window.innerHeight ) * 2 + 1, 0.5).unproject( camera );
-        let unitDirection = mousePoint.sub( camera.position ).normalize();
-        let targetZ = 0;
-        let ratio = (targetZ - camera.position.z )/ unitDirection.z;
-        grabClothPoint = camera.position.clone().add(unitDirection.multiplyScalar(ratio));
+        setGrabPoint(event.clientX, event.clientY);
+    }
+}
+function touchMove(event){
+    if(getCloth){
+        setGrabPoint(event.touches[0].pageX, event.touches[0].pageY);
     }
 }
 function onMouseUp(event ){
