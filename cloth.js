@@ -9,9 +9,9 @@ var nearPlane = 1;
 var farPlane = 10000;
 var groundMesh;
 
-window.addEventListener('touchstart', onMouseDown, false);
+window.addEventListener('touchstart', touchStart, false);
 window.addEventListener('touchmove', touchMove, false);
-window.addEventListener('touchend', onMouseUp, false);
+window.addEventListener('touchend', touchEnd, false);
 window.addEventListener("mousedown", onMouseDown, false);
 window.addEventListener("mousemove", onMouseMove, false);
 window.addEventListener("mouseup", onMouseUp, false);
@@ -20,6 +20,10 @@ init();
 animate();
 
 function onMouseDown(event ){
+    getCloth = true;
+}
+function touchStart(event){
+    event.preventDefault();
     getCloth = true;
 }
 function setGrabPoint(pointX, pointY){
@@ -40,6 +44,10 @@ function touchMove(event){
     }
 }
 function onMouseUp(event ){
+    getCloth = false;
+}
+function touchEnd(event){
+    event.preventDefault();
     getCloth = false;
 }
 function init() {
